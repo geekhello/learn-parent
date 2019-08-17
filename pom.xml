@@ -10,7 +10,8 @@
 	</parent>
 	<groupId>com.learn.zw</groupId>
 	<artifactId>learn-parent</artifactId>
-	<version>0.0.1-SNAPSHOT</version>
+	<version>0.0.1${env.env}</version>
+    <packaging>pom</packaging>
 	<name>learn-parent</name>
 	<description>Demo project for Spring Boot</description>
 
@@ -19,6 +20,35 @@
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 		<project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
 	</properties>
+
+    <profiles>
+        <profile>
+            <id>dev</id>
+            <activation>
+                <activeByDefault>true</activeByDefault>
+            </activation>
+            <properties>
+                <env.env>dev</env.env>
+                <env.env>-SNAPSHOT</env.env>
+            </properties>
+        </profile>
+        <profile>
+            <id>uat</id>
+            <properties>
+                <env.env>uat</env.env>
+                <env.version>-SNAPSHOT</env.version>
+            </properties>
+        </profile>
+        <profile>
+            <id>prd</id>
+            <properties>
+                <env.env>prd</env.env>
+                <env.env></env.env>
+            </properties>
+        </profile>
+    </profiles>
+
+
 
 	<!-- 阿里云私服地址 -->
 	<repositories>
@@ -137,6 +167,9 @@
 			<plugin>
 				<groupId>org.springframework.boot</groupId>
 				<artifactId>spring-boot-maven-plugin</artifactId>
+                <configuration>
+                    <layout>NONE</layout>
+                </configuration>
 			</plugin>
 		</plugins>
 	</build>
